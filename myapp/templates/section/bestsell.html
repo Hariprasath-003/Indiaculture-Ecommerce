@@ -1,0 +1,98 @@
+{% load static %}
+<style>
+    a{
+        text-decoration: none;
+    }
+</style>
+<section class="bestsell-section" id="bestsell">
+    <div class="container">
+        <div class="bestsell-title mb-3">
+            <i class="fa-solid fa-star me-2" style="color:#e1306c"></i>
+            Best Selling Products
+        </div>
+
+        <!-- First Row: Left to Right -->
+        <div class="bestsell-scroll-row">
+            {% for product in row1 %}
+            <div class="bestsell-card">
+                <a href="{% url 'product_details' product.id %}">
+                    {% if product.image_urls %}
+                        <img src="{{ product.image_urls.0 }}" alt="{{ product.name }}" loading="lazy">
+                    {% else %}
+                        <img src="{% static 'images/default-product.jpg' %}" alt="No image available" loading="lazy">
+                    {% endif %}
+                    <div class="bestsell-info">
+                        <div>
+                            <div class="bestsell-title-product">{{ product.name }}</div>
+
+                            <div class="bestsell-offer text-success" style="font-size: 0.6rem;">
+                                {% if product.offer_line %}
+                                    {{ product.offer_line }}
+                                {% else %}
+                                    &nbsp;
+                                {% endif %}
+                            </div>
+
+                            {% if product.old_price %}
+                                <div class="bestsell-price">
+                                    <span class="text-danger text-decoration-line-through" style="font-size: 0.9rem;">₹{{ product.old_price }}</span>
+                                    <span class="text-success fw-bold" style="font-size: 0.9rem;">₹{{ product.new_price }}</span>
+                                </div>
+                            {% else %}
+                                <div class="bestsell-price fw-bold" style="font-size: 0.9rem;">₹{{ product.new_price }}</div>
+                            {% endif %}
+                            <a href="{% url 'add_to_cart' product.id %}" data-auth-required>
+                                <button class="bestsell-btn mt-2">
+                                    <i class="fa-solid fa-cart-plus me-1"></i>Add to Cart
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Second Row: Right to Left -->
+        <div class="bestsell-scroll-row reverse">
+            {% for product in row2 %}
+            <div class="bestsell-card">
+                <a href="{% url 'product_details' product.id %}">
+                    {% if product.image_urls %}
+                        <img src="{{ product.image_urls.0 }}" alt="{{ product.name }}" loading="lazy">
+                    {% else %}
+                        <img src="{% static 'images/default-product.jpg' %}" alt="No image available" loading="lazy">
+                    {% endif %}
+                    <div class="bestsell-info">
+                        <div>
+                            <div class="bestsell-title-product">{{ product.name }}</div>
+
+                            <div class="bestsell-offer text-success fw-bold" style="font-size: 0.6rem;">
+                                {% if product.offer_line %}
+                                    {{ product.offer_line }}
+                                {% else %}
+                                    &nbsp;
+                                {% endif %}
+                            </div>
+
+                            {% if product.old_price %}
+                                <div class="bestsell-price">
+                                    <span class="text-danger text-decoration-line-through" style="font-size: 0.9rem;">₹{{ product.old_price }}</span>
+                                    <span class="text-success fw-bold " style="font-size: 0.9rem;">₹{{ product.new_price }}</span>
+                                </div>
+                            {% else %}
+                                <div class="bestsell-price fw-bold" style="font-size: 0.9rem;">₹{{ product.new_price }}</div>
+                            {% endif %}
+                            <a href="{% url 'add_to_cart' product.id %}" data-auth-required>
+                                <button class="bestsell-btn mt-2">
+                                    <i class="fa-solid fa-cart-plus me-1"></i>Add to Cart
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </a>     
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
